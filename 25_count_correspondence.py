@@ -1,18 +1,18 @@
 import pandas as pd
 
 # Load the datasets
-sample_dataset = pd.read_excel(
+auto_labeled = pd.read_excel(
     r"C:\Users\WarSa\OneDrive\Рабочий стол\диплом\rospravosudie_sou\sample_dataset.xlsx"
 )
-verification_dataset = pd.read_excel(
+gold_standard = pd.read_excel(
     r"C:\Users\WarSa\OneDrive\Рабочий стол\диплом\rospravosudie_sou\таблица_проверочная.xlsx"
 )
 
-sample_dataset = sample_dataset.sort_values(by="ID").reset_index(drop=True)
-verification_dataset = verification_dataset.sort_values(by="ID").reset_index(drop=True)
+auto_labeled = auto_labeled.sort_values(by="ID").reset_index(drop=True)
+gold_standard = gold_standard.sort_values(by="ID").reset_index(drop=True)
 
 # Check if all names in ID columns match
-id_match = sample_dataset["ID"].equals(verification_dataset["ID"])
+id_match = auto_labeled["ID"].equals(gold_standard["ID"])
 print(id_match)
 # Calculate the percentage of matching columns
 matching_columns = [
@@ -27,7 +27,7 @@ matching_columns = [
 matching_percentage = {}
 for column in matching_columns:
     matching_percentage[column] = (
-        sample_dataset[column] == verification_dataset[column]
+        auto_labeled[column] == gold_standard[column]
     ).mean() * 100
 
 # Prepare results
